@@ -8,6 +8,9 @@ This final project goals are:
 *Add collision detection for anything  
 *Design a proper UI using graphics  
 
+##Update 7/17/2013
+*added scoring and paddle width modification
+
 ##Update 7/16/2013  
 Git repository created.  
 ball.lua and paddle.lua in working condition.

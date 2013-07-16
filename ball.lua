@@ -30,12 +30,14 @@ function Ball:update(dt)
 	--Check our top edge
 	if self.y <= 0 then
 		--AWARD SCORE TO BOTTOM
+		Paddle:score(2)
 		--MODIFY PADDLE WIDTH
 		self:delete()
 	end
 	--check our bottom edge
 	if self.y >= height then
 		--AWARD SCORE TO TOP
+		Paddle:score(1)
 		--MODIFY PADDLE WIDTH
 		self:delete()
 	end

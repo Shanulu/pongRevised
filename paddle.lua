@@ -1,7 +1,7 @@
 --[[paddle.lua   Created by: Michael Groll
 paddle class for pong
 
-functions: update, draw, new, modifyWidth, findTarget
+functions: update, draw, new, findTarget
 
 -------------------------------------------]]
 
@@ -11,11 +11,13 @@ Paddle.__index = Paddle
 
 function Paddle:new(x, y, w, h, s)
 	local paddle = setmetatable( {}, Paddle )
+	
 	paddle.x = x
 	paddle.y = y
 	paddle.w = w --width
 	paddle.h = h --height
 	paddle.s = s --speed, max
+	paddle.score = 0
 	
 	return paddle
 end
@@ -45,6 +47,27 @@ function Paddle:draw()
 	love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
 end
 
+function Paddle:score(n)
+	--go through our paddles tables
+	for i, v in ipairs(paddles) do
+		--find if it equals the paddle we want, 1/top or 2/bottom
+		if i == n then
+			v.w = v.w + 3
+			v.score = v.score + 1
+			if v.w >= width/6 then
+				v.w = width/6
+			end
+		--if its the other paddle make it smaller!
+		elseif i ~= n then
+			v.w = v.w - 3
+			if v.w <= 18 then
+				v.w = 18
+			end
+		end
+	end
+	print(paddles[1].score .. " " .. paddles[2].score)
+end
+	
 function Paddle:findTarget(dt)
 	local potentialTarget
 	local minSteps = math.huge
