@@ -51,7 +51,11 @@ function Ball:update(dt)
 	for i = 1, #paddles do
 		if paddles[i] then
 			if self:collide(paddles[i]) then
-				self.v = self.v * -1
+				if math.abs(self.v) >= 450 then
+					self.v = self.v * -1
+				else
+					self.v = self.v * -1.1
+				end					
 				love.audio.play(self.sound)
 			end
 		end
