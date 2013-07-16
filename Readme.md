@@ -9,7 +9,7 @@ This final project goals are:
 *Design a proper UI using graphics  
 
 ##Update 7/17/2013
-*added scoring and paddle width modification
+*added scoring and paddle width modification  
 *added start button
 
 ##Update 7/16/2013  
