@@ -21,7 +21,7 @@ function Ball:new(x, y, r, h, v)
 	ball.color = { 255*math.random(), 255*math.random(), 255*math.random() }
 	ball.steps = nil --used in AI calculations
 	ball.order = math.random() --needed in our sort function
-	ball.sound = ballSound1
+	ball.sound = love.audio.newSource("Sounds/blop.ogg", "static")
 	
 	return ball
 end
@@ -98,3 +98,4 @@ function Ball:delete()
 	end
 	customSort(balls)
 end
+	
