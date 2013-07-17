@@ -45,6 +45,9 @@ end
 function Paddle:draw()
 	love.graphics.setColor(255, 255, 255)
 	love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
+	
+	love.graphics.print("Score: " .. paddles[1].score, 20, 25)
+	love.graphics.print("Score: " .. paddles[2].score, width - 75, height - 40)
 end
 
 function Paddle:score(n)
@@ -65,7 +68,6 @@ function Paddle:score(n)
 			end
 		end
 	end
-	print(paddles[1].score .. " " .. paddles[2].score)
 end
 	
 function Paddle:findTarget(dt)

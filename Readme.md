@@ -8,12 +8,13 @@ This final project goals are:
 *Add collision detection for anything  
 *Design a proper UI using graphics  
 
-##Update 7/17/2013
+##Update 7/16/2013
 *added scoring and paddle width modification  
-*added start button  
+*added start button and exit button
 *added increased velocity on balls when hit by paddle, max ~450
 *added gameStates "live" and "title"
+*added button.lua
 
-##Update 7/16/2013  
+##Update 7/15/2013  
 Git repository created.  
 ball.lua and paddle.lua in working condition.

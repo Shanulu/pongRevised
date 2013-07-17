@@ -1,5 +1,5 @@
---[[interface.lua    Created by: Michael Groll
-interface for pong
+--[[button.lua    Created by: Michael Groll
+button for pong
 
 functions: load, new, draw
 --------------------------------------------]]
@@ -46,3 +46,6 @@ function Button:draw()
 		end
 	end
 end
+
+Interface = {}
+Interface.__index = Interface

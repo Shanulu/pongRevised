@@ -1,7 +1,7 @@
 -- My third complete re-write of pong. 
 require 'ball' --contains our ball class
 require 'paddle' --contains our paddle class
---require 'interface' --contains our interface
+require 'button' --contains our interface
 
 --this function here will delete any entries that we have marked by putting the deleted tables at the end
 --using the sort via order, in which deleted has math.huge assigned.
@@ -22,31 +22,16 @@ function love.load()
 	deleted = { order = math.huge } --a table used to for comparing later
 	height = love.graphics.getHeight()
 	width = love.graphics.getWidth()
-	gameState = "title"
-	
-	--START BUTTON 		
-	startButtonDown = love.graphics.newImage("Art/start_dn.png")
-	startButtonUp = love.graphics.newImage("Art/start_up.png")
-	startButtonWidth = startButtonUp:getWidth()
-	startButtonHeight = startButtonUp:getHeight()
-	startButtonX = width/2 - startButtonWidth/2
-	startButtonY = height/2 - startButtonHeight*1.5
-	startButtonPressed = false
-	startButton = startButtonUp
-
-	
-				
+	gameState = "title"		
 	
 	--Loading
+	Button:load()
 	Paddle:load()
 end
 
 function love.draw()
 	if gameState == "title" then
-		love.graphics.draw(startButton, startButtonX, startButtonY)
-		if startButtonPressed then
-			gameState = "live"
-		end
+		Button:draw()
 	end
 	
 	if gameState == "live" then
@@ -90,24 +75,28 @@ end
 
 function love.mousepressed(x, y, button)
 	if gameState == "title" and button == "l" then
-		if x > startButtonX and x < startButtonX + startButtonWidth and
-		y < startButtonY + startButtonHeight and y > startButtonY then
-				startButton = startButtonDown
+		for i, v in ipairs(buttons) do
+			if x > v.x and x < v.x + v.w and y < v.y + v.h and y > v.y then
+				v.currentImage = v.downImage
+			else
+				v.currentImage = v.upImage
+			end
 		end	
 	end
 end
 	
 function love.mousereleased(x, y, button)
 	if gameState == "title" and button == "l" then
-		if x > startButtonX and
-		x < startButtonX + startButtonWidth and
-		y < startButtonY + startButtonHeight and
-		y > startButtonY then
-			gameState = "live"
-		else
-			startButton = startButtonUp
+		for i, v in ipairs(buttons) do
+			if x > v.x and x < v.x + v.w and y < v.y + v.h and y > v.y then
+				if v.name == "start" then
+					gameState = "live"
+				elseif v.name == "exit" then
+					love.quit()
+				end
+			else
+			v.currentImage = v.upImage
+			end
 		end
 	end
 end
-
-
