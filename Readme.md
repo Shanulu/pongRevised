@@ -2,14 +2,14 @@
 This is my final pass at pong before implementing physics into it.  
 My goals for this are:  
 *keep main.lua as short as possible by putting most of the code in separate files  
-*proper UI with graphics
-*difficulty levels
-*sound
-*random blocks/powerups
-*universal circle -> rectangle collision detection
+*proper UI with graphics  
+*difficulty levels  
+*sound  
+*random blocks/powerups  
+*universal circle -> rectangle collision detection  
 *add proper gamestates: live, pause, title, win, lose, pregame
 
-##known issues(always revised with each update)
+##Known Issues(always revised with each update)
 *sometimes the ball gets stuck in the sides of the window
 *collision is still shitty
 *i had to disable the check for both horizontal and vertical collision within  
