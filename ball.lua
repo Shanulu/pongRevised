@@ -44,23 +44,33 @@ function Ball:update(dt)
 	--check our sides
 	if self.x <= 0 + self.r or self.x >= width - self.r then
 		love.audio.play(self.sound)
-		self.h = self.h * -1
+		if math.abs(self.h) >= 250 then     --check to see if its over our max speed of 250
+			if math.abs(self.h) == self.h then   --is it positive?
+				self.h = 250
+				self.h = self.h * -1
+			else
+				self.h = -250
+				self.h = self.h * -1
+			end
+		else
+			self.h = self.h * -1.25
+		end		
 	end	
 	
 	--check for collision with paddles
 	for i = 1, #paddles do
 		if paddles[i] then
 			if self:collide(paddles[i]) then
-				if math.abs(self.v) >= 450 then
+				if math.abs(self.v) >= 450 then					
 					self.v = self.v * -1
 				else
-					self.v = self.v * -1.1
+					self.v = self.v * -1.25
 				end					
 				love.audio.play(self.sound)
 			end
 		end
 	end
-
+	
 	--CHECK FOR COLLISION WITH POWERUPS--]]
 	self.x = self.x + dt * self.h
 	self.y = self.y + dt * self.v
