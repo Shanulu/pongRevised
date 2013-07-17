@@ -10,14 +10,14 @@ My goals for this are:
 *add proper gamestates: live, pause, title, win, lose, pregame
 
 ##Known Issues(always revised with each update)
-*sometimes the ball gets stuck in the sides of the window
-*collision is still shitty
+*sometimes the ball gets stuck in the sides of the window  
+*collision is still shitty  
 *i had to disable the check for both horizontal and vertical collision within  
 the same scope as I was often getting diagonal bounces.....
 
 ##Update 7/17/2013
-*added button.lua, blocks.lua
-*added background music thanks to "thisismyusername" creator of '1-minute' @ opengameart.org
+*added button.lua, blocks.lua  
+*added background music thanks to "thisismyusername" creator of '1-minute' @ opengameart.org  
 *revised collision detection
 
 ##Update 7/16/2013
