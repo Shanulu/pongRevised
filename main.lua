@@ -36,6 +36,10 @@ function love.draw()
 	
 	if gameState == "live" then
 		--draw the balls
+		if #balls == 0 then
+			balls[#balls+1] = Ball:new()
+		end
+		
 		for i = 1, #balls do
 			if balls[i].draw then
 				balls[i]:draw()
@@ -68,7 +72,11 @@ end
 
 function love.keypressed(key)
 	if key == "w"  then
-		balls[#balls+1] = Ball:new()
+		if #balls >= 5 then
+			return
+		else
+			balls[#balls+1] = Ball:new()
+		end
 	end
 	
 end
@@ -99,4 +107,7 @@ function love.mousereleased(x, y, button)
 			end
 		end
 	end
+end
+
+function love.quit()
 end
