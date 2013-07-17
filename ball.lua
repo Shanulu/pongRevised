@@ -44,34 +44,41 @@ function Ball:update(dt)
 	--check our sides
 	if self.x <= 0 + self.r or self.x >= width - self.r then
 		love.audio.play(self.sound)
-		if math.abs(self.h) >= 250 then     --check to see if its over our max speed of 250
-			if math.abs(self.h) == self.h then   --is it positive?
-				self.h = 250
-				self.h = self.h * -1
-			else
-				self.h = -250
-				self.h = self.h * -1
-			end
-		else
-			self.h = self.h * -1.25
-		end		
+		self:flipHorizontal()
 	end	
 	
-	--check for collision with paddles
+	--CHECK FOR COLLISION WITH PADDLES
 	for i = 1, #paddles do
 		if paddles[i] then
-			if self:collide(paddles[i]) then
-				if math.abs(self.v) >= 450 then					
-					self.v = self.v * -1
-				else
-					self.v = self.v * -1.25
-				end					
+			if self:collide(paddles[i], dt) == 1 then
 				love.audio.play(self.sound)
+				self:flipVertical()
+				break
+			end
+			
+			if self:collide(paddles[i], dt) == 2 then
+				love.audio.play(self.sound)
+				self:flipHorizontal()
+				break
 			end
 		end
 	end
 	
-	--CHECK FOR COLLISION WITH POWERUPS--]]
+	--CHECK FOR COLLISION WITH POWERUPS
+	for i = 1, #blocks do
+		if blocks[i] then
+			if self:collide(blocks[i], dt) == 1 then
+				blocks[i].duration = blocks[i].duration - dt
+				self:flipVertical()
+				break
+			end
+			if self:collide(blocks[i], dt) == 2 then
+				blocks[i].duration = blocks[i].duration - dt
+				self:flipHorizontal()
+				break
+			end			
+		end
+	end
 	self.x = self.x + dt * self.h
 	self.y = self.y + dt * self.v
 end
@@ -81,27 +88,49 @@ function Ball:draw()
 	love.graphics.circle("fill", self.x, self.y, self.r, 100) 
 end
 
-function Ball:collide(rectangle)
-	if self.v > 0 then
-		--going down
-		if self.x + self.r >= rectangle.x --right side of ball to left side of rectangle
-		and self.x - self.r <= rectangle.x + rectangle.w --left side of ball to right side of rectangle
-		and self.y + self.r >= rectangle.y  --bottom of ball to top of rectangle
-		and self.y + self.r <= rectangle.y + rectangle.h then 
-			return true
+function Ball:collide(rectangle, dt)
+	local vector = math.sqrt(self.h^2 + self.v^2)*dt
+	if self.v < 0 then
+		--going up
+		if self.y - self.r - vector >= rectangle.y
+		and self.y - self.r - vector <= rectangle.y + rectangle.h
+		and self.x - self.r - vector <= rectangle.x + rectangle.w
+		and self.x + self.r - vector >= rectangle.x then
+			return 1
 		end
 	end
 	
-	if self.v < 0 then
-		--going up
-		if self.x + self.r >= rectangle.x --right side of ball to left side of rectangle
-		and self.x - self.r <= rectangle.x + rectangle.w --left side of ball to right side of rectangle
-		and self.y - self.r <= rectangle.y + rectangle.h  --top of ball to bottom of rectangle
-		and self.y - self.r >= rectangle.y then 
-			return true
+	if self.v > 0 then
+		--going down
+		if self.y + self.r + vector >= rectangle.y
+		and self.y + self.r + vector <= rectangle.y + rectangle.h
+		and self.x - self.r + vector <= rectangle.x + rectangle.w
+		and self.x + self.r + vector >= rectangle.x then
+			return 1
 		end
 	end
-	return false
+	
+	if self.h > 0 then
+		--going right
+		if self.x + self.r + vector >= rectangle.x
+		and self.x + self.r + vector <= rectangle.x + rectangle.w
+		and self.y - self.r + vector <= rectangle.y + rectangle.h
+		and self.y + self.r + vector >= rectangle.y then
+			return 2
+		end
+	end
+	
+	if self.h < 0 then
+		--going left
+		if self.x - self.r - vector >= rectangle.x
+		and self.x - self.r - vector <= rectangle.x + rectangle.w
+		and self.y - self.r - vector <= rectangle.y + rectangle.h
+		and self.y + self.r - vector >= rectangle.y then
+			return 2
+		end
+	end
+			
+	return 0
 end
 
 function Ball:delete()
@@ -112,4 +141,43 @@ function Ball:delete()
 	end
 	customSort(balls)
 end
-	
+
+function Ball:flipVertical()
+	if math.abs(self.v) == self.v then
+		-- positive
+		if self.v * 1.25 >= 450 then
+			self.v = 450
+			self.v = self.v * -1
+		else
+			self.v = self.v * -1.25
+		end
+	else
+		--negative
+		if self.v * 1.25 <= -450 then
+			self.v = -450
+			self.v = self.v * -1
+		else
+			self.v = self.v * -1.25
+		end
+	end
+end
+
+function Ball:flipHorizontal()
+	if math.abs(self.h) == self.h then
+		-- positive
+		if self.h * 1.25 >= 225 then
+			self.h = 225
+			self.h = self.h * -1
+		else
+			self.h = self.h * -1.25
+		end
+	else
+		--negative
+		if self.h * 1.25 <= -225 then
+			self.h = -225
+			self.h = self.h * -1
+		else
+			self.h = self.h * -1.25
+		end
+	end
+end

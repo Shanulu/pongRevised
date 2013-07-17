@@ -2,7 +2,7 @@
 require 'ball' --contains our ball class
 require 'paddle' --contains our paddle class
 require 'button' --contains our interface
-
+require 'blocks'
 --this function here will delete any entries that we have marked by putting the deleted tables at the end
 --using the sort via order, in which deleted has math.huge assigned.
 function customSort(t) --takes a table, must have a .order variable
@@ -23,7 +23,9 @@ function love.load()
 	height = love.graphics.getHeight()
 	width = love.graphics.getWidth()
 	gameState = "title"		
-	
+	--BGM
+	BGM = love.audio.newSource("Sounds/bgm.ogg")
+	love.audio.play(BGM)
 	--Loading
 	Button:load()
 	Paddle:load()
@@ -45,10 +47,17 @@ function love.draw()
 				balls[i]:draw()
 			end
 		end
+		
 		--draw the paddles
 		for i = 1, #paddles do
 			if paddles[i].draw then
 				paddles[i]:draw()
+			end
+		end
+		--draw the blocks
+		for i = 1, #blocks do
+			if blocks[i].draw then
+				blocks[i]:draw()
 			end
 		end
 	end
@@ -56,6 +65,12 @@ end
 
 function love.update(dt)
 	if gameState == "live" then
+		if math.random(1, 100) <= 3 then
+			if #blocks <= 5 then
+				blocks[#blocks+1] = Block:new()
+			end
+		end
+		
 		for i = 1, #balls do
 			if balls[i] then
 				balls[i]:update(dt)
@@ -65,6 +80,12 @@ function love.update(dt)
 		for i = 1, #paddles do
 			if paddles[i] then
 				paddles[i]:update(dt)
+			end
+		end
+		
+		for i = 1, #blocks do
+			if blocks[i] then
+				blocks[i]:update(dt)
 			end
 		end
 	end
