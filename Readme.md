@@ -10,9 +10,9 @@ This final project goals are:
 
 ##Update 7/16/2013
 *added scoring and paddle width modification  
-*added start button and exit button
-*added increased velocity on balls when hit by paddle, max ~450
-*added gameStates "live" and "title"
+*added start button and exit button  
+*added increased velocity on balls when hit by paddle, max ~450  
+*added gameStates "live" and "title"  
 *added button.lua
 
 ##Update 7/15/2013  
