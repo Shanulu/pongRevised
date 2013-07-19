@@ -28,7 +28,7 @@ the same scope as I was often getting diagonal bounces..
 *added scoring and paddle width modification  
 *added start button and exit button  
 *added increased vertical velocity when balls hit paddle, max 450  
-*added increased horizontal velocity when balls hit wall, max 250
+*added increased horizontal velocity when balls hit wall, max 250  
 *added gameStates "live" and "title"  
 
 ##Update 7/15/2013  
