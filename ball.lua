@@ -54,9 +54,7 @@ function Ball:update(dt)
 				love.audio.play(self.sound)
 				self:flipVertical()
 				break
-			end
-			
-			if self:collide(paddles[i], dt) == 2 then
+			elseif self:collide(paddles[i], dt) == 2 then
 				love.audio.play(self.sound)
 				self:flipHorizontal()
 				break
@@ -71,8 +69,7 @@ function Ball:update(dt)
 				blocks[i].duration = blocks[i].duration - dt
 				self:flipVertical()
 				break
-			end
-			if self:collide(blocks[i], dt) == 2 then
+			elseif self:collide(blocks[i], dt) == 2 then
 				blocks[i].duration = blocks[i].duration - dt
 				self:flipHorizontal()
 				break
@@ -89,43 +86,43 @@ function Ball:draw()
 end
 
 function Ball:collide(rectangle, dt)
-	local vector = math.sqrt(self.h^2 + self.v^2)*dt
+	--local vector = math.sqrt(self.h^2 + self.v^2)*dt  --this will always evaluate to positive o_O
 	if self.v < 0 then
 		--going up
-		if self.y - self.r - vector >= rectangle.y
-		and self.y - self.r - vector <= rectangle.y + rectangle.h
-		and self.x - self.r - vector <= rectangle.x + rectangle.w
-		and self.x + self.r - vector >= rectangle.x then
+		if self.y - self.r + self.v*dt >= rectangle.y
+		and self.y - self.r + self.v*dt <= rectangle.y + rectangle.h
+		and self.x - self.r + self.h*dt <= rectangle.x + rectangle.w
+		and self.x + self.r + self.h*dt >= rectangle.x then
 			return 1
 		end
 	end
 	
 	if self.v > 0 then
 		--going down
-		if self.y + self.r + vector >= rectangle.y
-		and self.y + self.r + vector <= rectangle.y + rectangle.h
-		and self.x - self.r + vector <= rectangle.x + rectangle.w
-		and self.x + self.r + vector >= rectangle.x then
+		if self.y + self.r + self.v*dt >= rectangle.y
+		and self.y + self.r + self.v*dt <= rectangle.y + rectangle.h
+		and self.x - self.r + self.h*dt <= rectangle.x + rectangle.w
+		and self.x + self.r + self.h*dt >= rectangle.x then
 			return 1
 		end
 	end
 	
 	if self.h > 0 then
 		--going right
-		if self.x + self.r + vector >= rectangle.x
-		and self.x + self.r + vector <= rectangle.x + rectangle.w
-		and self.y - self.r + vector <= rectangle.y + rectangle.h
-		and self.y + self.r + vector >= rectangle.y then
+		if self.x + self.r + self.h*dt >= rectangle.x
+		and self.x + self.r + self.h*dt <= rectangle.x + rectangle.w
+		and self.y - self.r + self.v*dt <= rectangle.y + rectangle.h
+		and self.y + self.r + self.v*dt >= rectangle.y then
 			return 2
 		end
 	end
 	
 	if self.h < 0 then
 		--going left
-		if self.x - self.r - vector >= rectangle.x
-		and self.x - self.r - vector <= rectangle.x + rectangle.w
-		and self.y - self.r - vector <= rectangle.y + rectangle.h
-		and self.y + self.r - vector >= rectangle.y then
+		if self.x - self.r + self.h*dt >= rectangle.x
+		and self.x - self.r + self.h*dt <= rectangle.x + rectangle.w
+		and self.y - self.r + self.v*dt <= rectangle.y + rectangle.h
+		and self.y + self.r + self.v*dt >= rectangle.y then
 			return 2
 		end
 	end

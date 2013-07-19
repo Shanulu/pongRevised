@@ -112,5 +112,5 @@ function Paddle:load()
 	--[[PADDLE SETUP -----]]
 	--x, y, width, height, speed(max)
 	paddles[#paddles+1] = Paddle:new(width/2 - 55, 10, 55, 10, 200)
-	paddles[#paddles+1] = Paddle:new(width/2 - 55, height - 20, 55, 10, 113) --add functionality to set AI speed, 113 = normal, 150 = impossible
+	paddles[#paddles+1] = Paddle:new(width/2 - 55, height - 20, 55, 10, 100) --add functionality to set AI speed, 100 = normal, 150 = impossible
 end

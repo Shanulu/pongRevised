@@ -25,6 +25,7 @@ function love.load()
 	gameState = "title"		
 	--BGM
 	BGM = love.audio.newSource("Sounds/bgm.ogg")
+	BGM:setLooping(true)
 	love.audio.play(BGM)
 	--Loading
 	Button:load()
@@ -65,7 +66,7 @@ end
 
 function love.update(dt)
 	if gameState == "live" then
-		if math.random(1, 100) <= 3 then
+		if math.random(1, 100) <= 2 then
 			if #blocks <= 5 then
 				blocks[#blocks+1] = Block:new()
 			end
