@@ -16,7 +16,7 @@ My goals for this are:
 the same scope as I was often getting diagonal bounces..  
 
 ##7/19/2013
-*added horizontal velocity increase depending on distance from paddle center
+*added horizontal velocity increase depending on distance from paddle center  
 
 ##Update 7/18/2013
 *added green to red coloration depending on block duration remaining  
