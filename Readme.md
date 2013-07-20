@@ -5,7 +5,7 @@ My goals for this are:
 *proper UI with graphics  
 *difficulty levels  
 *sound  
-*random blocks/powerups  
+*random blocks/powerups?   
 *universal circle -> rectangle collision detection  
 *add proper gamestates: live, pause, title, win, lose, pregame
 
@@ -14,6 +14,9 @@ My goals for this are:
 *collision is still shitty  
 *i had to disable the check for both horizontal and vertical collision within  
 the same scope as I was often getting diagonal bounces..  
+
+##7/19/2013
+*added horizontal velocity increase depending on distance from paddle center
 
 ##Update 7/18/2013
 *added green to red coloration depending on block duration remaining  

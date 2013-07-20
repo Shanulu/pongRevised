@@ -51,10 +51,12 @@ function Ball:update(dt)
 	for i = 1, #paddles do
 		if paddles[i] then
 			if self:collide(paddles[i], dt) == 1 then
+				self:checkDistance(paddles[i], dt)
 				love.audio.play(self.sound)
 				self:flipVertical()
 				break
 			elseif self:collide(paddles[i], dt) == 2 then
+				self:checkDistance(paddles[i], dt)
 				love.audio.play(self.sound)
 				self:flipHorizontal()
 				break
@@ -178,3 +180,29 @@ function Ball:flipHorizontal()
 		end
 	end
 end
+
+function Ball:checkDistance(paddle, dt)
+	local section = paddle.w / 5
+	local horizontal = self.h
+	--    [_1_|_2_|_3_|_4_|_5_]
+	--i need to check if the ball is close to the center, the further away the more we will alter the horizontal velocity
+	if self.x >= paddle.x + 2*section and paddle.x <= paddle.x + paddle.w - 2*section then 
+		horizontal = self.h * 1.15 --this covers 3
+	elseif self.x >= paddle.x + section and paddle.x <= paddle.x + paddle.w - section then 
+		horizontal = self.h * 1.30 --this covers 2-4
+	elseif self.x >= paddle.x and self.x <= paddle.x + paddle.w then 
+		horizontal = self.h * 1.45 --this covers 1-5, the whole paddle
+	end
+	
+	self.h = horizontal
+	
+	if math.abs(self.h) == self.h then
+		if math.abs(self.h) >= 225 then
+			self.h = 225
+		else
+			self.h = -225
+		end
+	end
+end
+
+	
