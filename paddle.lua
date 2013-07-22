@@ -45,7 +45,7 @@ end
 function Paddle:draw()
 	love.graphics.setColor(255, 255, 255)
 	love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
-	
+	love.graphics.setFont(scoreFont)
 	love.graphics.print("Score: " .. paddles[1].score, 20, 25)
 	love.graphics.print("Score: " .. paddles[2].score, width - 75, height - 40)
 end

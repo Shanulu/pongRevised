@@ -13,7 +13,7 @@ Block.__index = Block
 function Block:new() 
 	local block = setmetatable( {}, Block )
 	
-	block.x = math.random(75, width - 75)
+	block.x = math.random(90, width - 90)
 	block.y = math.random(25, width - 25)
 	block.w = math.random(10, 40)
 	block.h = math.random(10, 40)

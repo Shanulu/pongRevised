@@ -1,7 +1,7 @@
 -- My third complete re-write of pong. 
 require 'ball' --contains our ball class
 require 'paddle' --contains our paddle class
-require 'button' --contains our interface
+require 'button' --contains our buttons
 require 'blocks'
 --this function here will delete any entries that we have marked by putting the deleted tables at the end
 --using the sort via order, in which deleted has math.huge assigned.
@@ -18,11 +18,13 @@ end
 
 function love.load()
 	love.graphics.setBackgroundColor(0, 0, 0) --Black
+	preGameFont = love.graphics.newFont("Fonts/Digital_tech.otf", 40)
+	scoreFont = love.graphics.newFont("Fonts/Digital_tech.otf", 14)
 	--[[-- VARIABLES --------]]
 	deleted = { order = math.huge } --a table used to for comparing later
 	height = love.graphics.getHeight()
 	width = love.graphics.getWidth()
-	gameState = "title"		
+	gameState = "title"		--title, pregame, options, live, pause, endgame
 	--BGM
 	BGM = love.audio.newSource("Sounds/bgm.ogg")
 	BGM:setLooping(true)
@@ -30,14 +32,16 @@ function love.load()
 	--Loading
 	Button:load()
 	Paddle:load()
+	--timer for pregame
+	preGame = 5
 end
 
 function love.draw()
+	--[[ TITLE SCREEN ---------------------------------------]]
 	if gameState == "title" then
 		Button:draw()
-	end
-	
-	if gameState == "live" then
+	--[[ LIVE GAME ------------------------------------------]]	
+	elseif gameState == "live" then
 		--draw the balls
 		if #balls == 0 then
 			balls[#balls+1] = Ball:new()
@@ -61,13 +65,23 @@ function love.draw()
 				blocks[i]:draw()
 			end
 		end
+		--draw Pregame counter if necessary
+		if preGame > 0 then
+			love.graphics.setColor( 255, 255, 0)
+			love.graphics.setFont(preGameFont)
+			love.graphics.print("Game Starting in - " .. preGame, 100, height/2)
+		end	
+	--[[ OPTIONS SCREEN -----------------------------------]]
+	elseif gameState == "options" then
+		--draw options screen
+		love.graphics.clear()
 	end
 end
 
 function love.update(dt)
-	if gameState == "live" then
+	if gameState == "live" and preGame <= 0 then
 		if math.random(1, 100) <= 2 then
-			if #blocks <= 5 then
+			if #blocks < 3 then
 				blocks[#blocks+1] = Block:new()
 			end
 		end
@@ -89,18 +103,18 @@ function love.update(dt)
 				blocks[i]:update(dt)
 			end
 		end
+	elseif gameState == "live" and preGame > 0 then
+		preGame = preGame - dt
+		if preGame <= 0 then preGame = 0 end
 	end
 end
 
 function love.keypressed(key)
-	if key == "w"  then
-		if #balls >= 5 then
-			return
-		else
-			balls[#balls+1] = Ball:new()
-		end
-	end
-	
+	if key == "escape" and gameState == "options" then
+		gameState = "title"
+	elseif key == "escape" and gameState == "title" then
+		love.event.push('quit')
+	end	
 end
 
 function love.mousepressed(x, y, button)
@@ -122,7 +136,10 @@ function love.mousereleased(x, y, button)
 				if v.name == "start" then
 					gameState = "live"
 				elseif v.name == "exit" then
-					love.quit()
+					love.event.push('quit')
+				elseif v.name == "options" then
+					gameState = "options"
+					v.currentImage = v.upImage --return the button to normal so when we return...
 				end
 			else
 			v.currentImage = v.upImage

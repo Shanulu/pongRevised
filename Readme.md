@@ -7,16 +7,24 @@ My goals for this are:
 *sound  
 *random blocks/powerups?   
 *universal circle -> rectangle collision detection  
-*add proper gamestates: live, pause, title, win, lose, pregame
+*add proper gamestates: live, pause, title, win, lose, options
 
 ##Known Issues(always revised with each update)
 *sometimes the ball gets stuck in the sides of the window  
 *collision is still shitty  
 *i had to disable the check for both horizontal and vertical collision within  
 the same scope as I was often getting diagonal bounces..  
+*horizontal velocity is not changing correctly upon paddle hit
+
+##7/21/2013 
+*added options and help button  
+*adjusted max blocks to 3  
+*added custom font  
+*added pregame countdown  
 
 ##7/19/2013
 *added horizontal velocity increase depending on distance from paddle center  
+*fixed the exit function
 
 ##Update 7/18/2013
 *added green to red coloration depending on block duration remaining  

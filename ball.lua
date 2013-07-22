@@ -51,12 +51,11 @@ function Ball:update(dt)
 	for i = 1, #paddles do
 		if paddles[i] then
 			if self:collide(paddles[i], dt) == 1 then
-				self:checkDistance(paddles[i], dt)
 				love.audio.play(self.sound)
+				self:checkDistance(paddles[i])
 				self:flipVertical()
 				break
 			elseif self:collide(paddles[i], dt) == 2 then
-				self:checkDistance(paddles[i], dt)
 				love.audio.play(self.sound)
 				self:flipHorizontal()
 				break
@@ -88,7 +87,6 @@ function Ball:draw()
 end
 
 function Ball:collide(rectangle, dt)
-	--local vector = math.sqrt(self.h^2 + self.v^2)*dt  --this will always evaluate to positive o_O
 	if self.v < 0 then
 		--going up
 		if self.y - self.r + self.v*dt >= rectangle.y
@@ -121,10 +119,10 @@ function Ball:collide(rectangle, dt)
 	
 	if self.h < 0 then
 		--going left
-		if self.x - self.r + self.h*dt >= rectangle.x
-		and self.x - self.r + self.h*dt <= rectangle.x + rectangle.w
-		and self.y - self.r + self.v*dt <= rectangle.y + rectangle.h
-		and self.y + self.r + self.v*dt >= rectangle.y then
+		if self.x - self.r + self.h*dt >= rectangle.x --inside its left side
+		and self.x - self.r + self.h*dt <= rectangle.x + rectangle.w --inside its right side
+		and self.y - self.r + self.v*dt <= rectangle.y + rectangle.h -- top within its bottom 
+		and self.y + self.r + self.v*dt >= rectangle.y then -- bottom within its top
 			return 2
 		end
 	end
@@ -142,66 +140,53 @@ function Ball:delete()
 end
 
 function Ball:flipVertical()
+	self.v = self.v * -1.3
 	if math.abs(self.v) == self.v then
 		-- positive
-		if self.v * 1.25 >= 450 then
+		if self.v >= 450 then
 			self.v = 450
-			self.v = self.v * -1
-		else
-			self.v = self.v * -1.25
-		end
-	else
 		--negative
-		if self.v * 1.25 <= -450 then
+		elseif self.v <= -450 then
 			self.v = -450
-			self.v = self.v * -1
-		else
-			self.v = self.v * -1.25
 		end
 	end
 end
 
 function Ball:flipHorizontal()
+	self.h = self.h * -1.25
 	if math.abs(self.h) == self.h then
 		-- positive
-		if self.h * 1.25 >= 225 then
+		if self.h >= 225 then
 			self.h = 225
-			self.h = self.h * -1
-		else
-			self.h = self.h * -1.25
 		end
 	else
 		--negative
-		if self.h * 1.25 <= -225 then
+		if self.h <= -225 then
 			self.h = -225
-			self.h = self.h * -1
-		else
-			self.h = self.h * -1.25
 		end
 	end
 end
 
-function Ball:checkDistance(paddle, dt)
+function Ball:checkDistance(paddle)
 	local section = paddle.w / 5
-	local horizontal = self.h
-	--    [_1_|_2_|_3_|_4_|_5_]
+	local delta = self.h
+	print(self.h)
+	--    x[_1_|_2_|_3_|_4_|_5_]w
 	--i need to check if the ball is close to the center, the further away the more we will alter the horizontal velocity
-	if self.x >= paddle.x + 2*section and paddle.x <= paddle.x + paddle.w - 2*section then 
-		horizontal = self.h * 1.15 --this covers 3
-	elseif self.x >= paddle.x + section and paddle.x <= paddle.x + paddle.w - section then 
-		horizontal = self.h * 1.30 --this covers 2-4
-	elseif self.x >= paddle.x and self.x <= paddle.x + paddle.w then 
-		horizontal = self.h * 1.45 --this covers 1-5, the whole paddle
+	if self.x >= paddle.x and self.x <= paddle.x + paddle.w then --this covers 1-5, the whole paddle, always true because thats how we go to this function
+		delta = self.h * 1.75
+	elseif self.x >= paddle.x + section and self.x <= paddle.x + paddle.w - section then --this covers 2-4 and overrides the prior
+		delta = self.h * 1.45 
+	elseif self.x >= paddle.x + 2*section and self.x <= paddle.x + paddle.w - 2*section then --this covers 3 and overrides the two prior conditions
+		delta = self.h * 1.15 		
 	end
 	
-	self.h = horizontal
-	
-	if math.abs(self.h) == self.h then
-		if math.abs(self.h) >= 225 then
-			self.h = 225
-		else
-			self.h = -225
-		end
+	self.h = delta
+	print(self.h)
+	if self.h >= 225 then
+		self.h = 225
+	elseif self.h <= -225 then
+		self.h = -225
 	end
 end
 
