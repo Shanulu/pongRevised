@@ -10,7 +10,7 @@ My goals for this are:
 *add proper gamestates: live, pause, title, win, lose, options
 
 ##Current Settings
-*Player max move speed = 200
+*Player max move speed = 200  
 *AI max move speed = 100  
 *Ball max horizontal velocity = 225  
 *Ball max vertical velocity = 450  
