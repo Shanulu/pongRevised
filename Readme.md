@@ -13,21 +13,34 @@ My goals for this are:
 * Player max move speed = 200  
 * AI max move speed = 100  
 * Ball max horizontal velocity = 225  
-* Ball max vertical velocity = 450  
+* Ball max vertical velocity = 400  
 * Maximum balls = 5  
 * Maximum blocks = 3
+
+##To-Do List
+* Separate screen drawing into functions  
+* Combine screen functions and button functions into one file, 'Interface'   
+* Create button toggle function for options buttons  
+* Create art for remaining buttons  
+* Revise how balls obtain their velocity  
+* Create win condition, win or loss state, and corresponding screens  
+* (optional)Devise a plan to handle gameStates cleanly
 
 ##Known Issues(always revised with each update)
 * sometimes the ball gets stuck in the sides of the window  
 * collision is still shitty  
 * returning to title screen from options or help causes a green hue
-* random velocities can be zero or approaching 0
+* random velocities can be zero or approaching 0  
+* options buttons turn "off" when clicking outside their bounds
 
 ###7/23/2013
 * added help gamestate and page  
 * fixed horizontal velocity change based on distance from paddle center  
 * added pause functionality  
-* revised buttons to have a corresponding gameState
+* revised buttons to have a corresponding gameState  
+* revised ball max vertical velocity to 400  
+* added ai difficulty selector, easy, medium, hard  
+* moved mouse callbacks to button.lua  
 
 ###7/21/2013 
 * added options and help button  

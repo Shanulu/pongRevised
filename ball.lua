@@ -143,11 +143,11 @@ function Ball:flipVertical()
 	self.v = self.v * -1.3
 	if math.abs(self.v) == self.v then
 		-- positive
-		if self.v >= 450 then
-			self.v = 450
+		if self.v >= 400 then
+			self.v = 400
 		--negative
-		elseif self.v <= -450 then
-			self.v = -450
+		elseif self.v <= -400 then
+			self.v = -400
 		end
 	end
 end

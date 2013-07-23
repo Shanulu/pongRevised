@@ -25,23 +25,21 @@ function love.load()
 	height = love.graphics.getHeight()
 	width = love.graphics.getWidth()
 	gameState = "title"		--title, pregame, options, live, pause, endgame
+	difficulty = 100  --ai max speed movement
+	preGame = 5 	--timer for pregame
 	--BGM
 	BGM = love.audio.newSource("Sounds/bgm.ogg")
 	BGM:setLooping(true)
 	love.audio.play(BGM)
 	--Loading
 	Button:load()
-	Paddle:load()
-	--timer for pregame
-	preGame = 5
+	--we call Paddle:load() in button.lua, so we can set difficulty
+
 end
 
 function love.draw()
-	--[[ TITLE SCREEN ---------------------------------------]]
-	if gameState == "title" then
-		Button:draw()
 	--[[ LIVE GAME ------------------------------------------]]	
-	elseif gameState == "live" or gameState == "paused" then
+	if gameState == "live" or gameState == "paused" then
 		--draw the balls
 		if #balls == 0 then
 			balls[#balls+1] = Ball:new()
@@ -83,9 +81,7 @@ function love.draw()
 		love.graphics.setColor( 100, 255, 50)
 		love.graphics.setFont(preGameFont)
 		love.graphics.print("AI difficulty:", 20, 20)
-		--draw our buttons
 		love.graphics.print("BGM Volume: ", 20, 50)
-		--draw more buttons
 		
 	--[[ HELP SCREEN --------------------------------------]]
 	elseif gameState == "help" then
@@ -97,6 +93,10 @@ function love.draw()
 							"\n\nRandom blocks will spawn and die. The color gives away the time remaining" ..
 							"\n\nBalls will spawn from blocks, or if 0 remain, up to a maximum of 5" ..
 							"\n\nBalls increase in speed by hitting objects and walls" , 20,20, width-30)
+	end
+		--will only draw buttons for their corresponding gamestate
+	if gameState ~= "live" then
+		Button:draw()
 	end
 end
 
@@ -147,37 +147,6 @@ function love.keypressed(key)
 			gameState = "paused"
 		end
 	end	
-end
-
-function love.mousepressed(x, y, button)
-	if gameState == "title" and button == "l" then
-		for i, v in ipairs(buttons) do
-			if x > v.x and x < v.x + v.w and y < v.y + v.h and y > v.y then
-				v.currentImage = v.downImage
-			else
-				v.currentImage = v.upImage
-			end
-		end	
-	end
-end
-	
-function love.mousereleased(x, y, button)
-	if gameState == "title" and button == "l" then
-		for i, v in ipairs(buttons) do
-			if x > v.x and x < v.x + v.w and y < v.y + v.h and y > v.y then
-				if v.name == "start" then
-					gameState = "live"
-				elseif v.name == "exit" then
-					love.event.push('quit')
-				elseif v.name == "options" then
-					gameState = "options"
-				elseif v.name == "help" then
-					gameState = "help"
-				end
-			end
-			v.currentImage = v.upImage --return the button to normal so when we return...
-		end
-	end
 end
 
 function love.quit()
