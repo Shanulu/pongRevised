@@ -41,7 +41,7 @@ function love.draw()
 	if gameState == "title" then
 		Button:draw()
 	--[[ LIVE GAME ------------------------------------------]]	
-	elseif gameState == "live" then
+	elseif gameState == "live" or gameState == "paused" then
 		--draw the balls
 		if #balls == 0 then
 			balls[#balls+1] = Ball:new()
@@ -71,10 +71,32 @@ function love.draw()
 			love.graphics.setFont(preGameFont)
 			love.graphics.print("Game Starting in - " .. preGame, 100, height/2)
 		end	
+		--paused notification
+		if gameState == "paused" and preGame <= 0 then
+			love.graphics.setFont(preGameFont)
+			love.graphics.print("Paused. Press P to resume.", 30, height/2)
+		end
 	--[[ OPTIONS SCREEN -----------------------------------]]
 	elseif gameState == "options" then
 		--draw options screen
 		love.graphics.clear()
+		love.graphics.setColor( 100, 255, 50)
+		love.graphics.setFont(preGameFont)
+		love.graphics.print("AI difficulty:", 20, 20)
+		--draw our buttons
+		love.graphics.print("BGM Volume: ", 20, 50)
+		--draw more buttons
+		
+	--[[ HELP SCREEN --------------------------------------]]
+	elseif gameState == "help" then
+		--draw our help screen
+		love.graphics.clear()
+		love.graphics.setColor( 100, 255, 50)
+		love.graphics.setFont(preGameFont)
+		love.graphics.printf("Use W and A or Left and Right to move." ..
+							"\n\nRandom blocks will spawn and die. The color gives away the time remaining" ..
+							"\n\nBalls will spawn from blocks, or if 0 remain, up to a maximum of 5" ..
+							"\n\nBalls increase in speed by hitting objects and walls" , 20,20, width-30)
 	end
 end
 
@@ -111,9 +133,19 @@ end
 
 function love.keypressed(key)
 	if key == "escape" and gameState == "options" then
+		love.graphics.clear()
 		gameState = "title"
 	elseif key == "escape" and gameState == "title" then
 		love.event.push('quit')
+	elseif key == "escape" and gameState == "help" then
+		love.graphics.clear()
+		gameState = "title"
+	elseif key == "p" then
+		if gameState == "paused" then 
+			gameState = "live"
+		else
+			gameState = "paused"
+		end
 	end	
 end
 
@@ -139,11 +171,11 @@ function love.mousereleased(x, y, button)
 					love.event.push('quit')
 				elseif v.name == "options" then
 					gameState = "options"
-					v.currentImage = v.upImage --return the button to normal so when we return...
+				elseif v.name == "help" then
+					gameState = "help"
 				end
-			else
-			v.currentImage = v.upImage
 			end
+			v.currentImage = v.upImage --return the button to normal so when we return...
 		end
 	end
 end

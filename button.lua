@@ -61,6 +61,3 @@ function Button:draw()
 		end
 	end
 end
-
-Interface = {}
-Interface.__index = Interface

@@ -15,14 +15,17 @@ My goals for this are:
 *Ball max horizontal velocity = 225  
 *Ball max vertical velocity = 450  
 *Maximum balls = 5  
-*Maximum blocks = 3  
+*Maximum blocks = 3
 
 ##Known Issues(always revised with each update)
 *sometimes the ball gets stuck in the sides of the window  
 *collision is still shitty  
-*i had to disable the check for both horizontal and vertical collision within  
-the same scope as I was often getting diagonal bounces..  
-*horizontal velocity is not changing correctly upon paddle hit
+*returning to title screen from options or help causes a green hue
+
+###7/23/2013
+*added help gamestate and page  
+*fixed horizontal velocity change based on distance from paddle center  
+*added pause functionality
 
 ###7/21/2013 
 *added options and help button  

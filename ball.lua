@@ -168,21 +168,23 @@ function Ball:flipHorizontal()
 end
 
 function Ball:checkDistance(paddle)
-	local section = paddle.w / 5
+	local section = paddle.w/ 5
 	local delta = self.h
-	print(self.h)
 	--    x[_1_|_2_|_3_|_4_|_5_]w
 	--i need to check if the ball is close to the center, the further away the more we will alter the horizontal velocity
-	if self.x >= paddle.x and self.x <= paddle.x + paddle.w then --this covers 1-5, the whole paddle, always true because thats how we go to this function
-		delta = self.h * 1.75
+	if self.x >= paddle.x + 2*section and self.x <= paddle.x + paddle.w - 2*section then --this covers 3 and overrides the two prior conditions
+		print("3")
+		delta = self.h * 1.15
 	elseif self.x >= paddle.x + section and self.x <= paddle.x + paddle.w - section then --this covers 2-4 and overrides the prior
-		delta = self.h * 1.45 
-	elseif self.x >= paddle.x + 2*section and self.x <= paddle.x + paddle.w - 2*section then --this covers 3 and overrides the two prior conditions
-		delta = self.h * 1.15 		
+		print("2-4")
+		delta = self.h * 1.45
+	elseif self.x >= paddle.x and self.x <= paddle.x + paddle.w then --this covers 1-5, the whole paddle, always true because thats how we go to this function
+		print("1-5")
+		delta = self.h * 1.75
 	end
 	
 	self.h = delta
-	print(self.h)
+
 	if self.h >= 225 then
 		self.h = 225
 	elseif self.h <= -225 then
