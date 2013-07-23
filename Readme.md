@@ -7,7 +7,7 @@ My goals for this are:
 *sound  
 *random blocks/powerups?   
 *universal circle -> rectangle collision detection  
-*add proper gamestates: live, pause, title, win, lose, options
+*add gamestates: live, pause, title, win, lose, options
 
 ##Current Settings
 *Player max move speed = 200  
@@ -21,11 +21,13 @@ My goals for this are:
 *sometimes the ball gets stuck in the sides of the window  
 *collision is still shitty  
 *returning to title screen from options or help causes a green hue
+*random velocities can be zero or approaching 0
 
 ###7/23/2013
 *added help gamestate and page  
 *fixed horizontal velocity change based on distance from paddle center  
-*added pause functionality
+*added pause functionality  
+*revised buttons to have a corresponding gameState
 
 ###7/21/2013 
 *added options and help button  

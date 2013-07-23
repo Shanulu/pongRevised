@@ -1,7 +1,7 @@
 -- My third complete re-write of pong. 
 require 'ball' --contains our ball class
 require 'paddle' --contains our paddle class
-require 'button' --contains our buttons
+require 'button' --contains our gameStates, buttons
 require 'blocks'
 --this function here will delete any entries that we have marked by putting the deleted tables at the end
 --using the sort via order, in which deleted has math.huge assigned.

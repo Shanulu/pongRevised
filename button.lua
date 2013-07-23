@@ -20,7 +20,7 @@ function Button:new(name, image, image2)
 	button.y = 0
 	button.w = nil
 	button.h = nil
-	button.pressed = false
+	button.state = "title"
 	
 	return button
 end
@@ -50,13 +50,18 @@ function Button:load()
 	buttons[4].h = buttons[4].currentImage:getHeight()
 	buttons[4].x = width/2 - 100
 	buttons[4].y = buttons[3].y + buttons[3].h + 5
-	
-
+	--AI Easy
+	--AI Average
+	--AI Impossible
+	--BGM OFF
+	--BGM ON
+	--SOUND OFF
+	--SOUND ON
 end
 
 function Button:draw()
 	for i, v in ipairs(buttons) do
-		if v then
+		if v.state == gameState then
 			love.graphics.draw(v.currentImage, v.x, v.y)
 		end
 	end
