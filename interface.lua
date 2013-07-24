@@ -6,7 +6,7 @@
 -- gitHub:			https://github.com/Shanulu/pongRevised
 --
 -- description:     Handles initializing of buttons and text, drawing and
---					updating thereof. 
+--					updating thereof.
 ----------------------------------------------------------------------------
 Screen = {}
 preGameFont = love.graphics.newFont("Fonts/Digital_tech.otf", 36)
