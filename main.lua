@@ -1,7 +1,7 @@
 -- My third complete re-write of pong. 
 require 'ball' --contains our ball class
 require 'paddle' --contains our paddle class
-require 'button' --contains our gameStates, buttons
+require 'interface' --contains our gameStates, buttons
 require 'blocks'
 --this function here will delete any entries that we have marked by putting the deleted tables at the end
 --using the sort via order, in which deleted has math.huge assigned.
@@ -18,7 +18,8 @@ end
 
 function love.load()
 	love.graphics.setBackgroundColor(0, 0, 0) --Black
-	preGameFont = love.graphics.newFont("Fonts/Digital_tech.otf", 40)
+	love.graphics.setColorMode("replace")
+	preGameFont = love.graphics.newFont("Fonts/Digital_tech.otf", 36)
 	scoreFont = love.graphics.newFont("Fonts/Digital_tech.otf", 14)
 	--[[-- VARIABLES --------]]
 	deleted = { order = math.huge } --a table used to for comparing later
@@ -67,14 +68,14 @@ function love.draw()
 		if preGame > 0 then
 			love.graphics.setColor( 255, 255, 0)
 			love.graphics.setFont(preGameFont)
-			love.graphics.print("Game Starting in - " .. preGame, 100, height/2)
+			love.graphics.print("Game Starting in - " .. math.floor(preGame), 100, height/2)
 		end	
-		--paused notification
-		if gameState == "paused" and preGame <= 0 then
-			love.graphics.setFont(preGameFont)
-			love.graphics.print("Paused. Press P to resume.", 30, height/2)
-		end
-	--[[ OPTIONS SCREEN -----------------------------------]]
+
+	elseif gameState ~= "live" then
+		Screen:draw()
+	end
+	
+	--[[ OPTIONS SCREEN -----------------------------------
 	elseif gameState == "options" then
 		--draw options screen
 		love.graphics.clear()
@@ -83,7 +84,7 @@ function love.draw()
 		love.graphics.print("AI difficulty:", 20, 20)
 		love.graphics.print("BGM Volume: ", 20, 50)
 		
-	--[[ HELP SCREEN --------------------------------------]]
+	-- HELP SCREEN --------------------------------------
 	elseif gameState == "help" then
 		--draw our help screen
 		love.graphics.clear()
@@ -97,7 +98,8 @@ function love.draw()
 		--will only draw buttons for their corresponding gamestate
 	if gameState ~= "live" then
 		Button:draw()
-	end
+	end ]]
+	
 end
 
 function love.update(dt)
@@ -125,6 +127,14 @@ function love.update(dt)
 				blocks[i]:update(dt)
 			end
 		end
+		
+		if paddles[1].score == 15 then
+			--player wins
+			love.event.push('quit')
+		elseif paddles[2].score == 15 then
+			--computer wins
+			love.event.push('quit')
+		end
 	elseif gameState == "live" and preGame > 0 then
 		preGame = preGame - dt
 		if preGame <= 0 then preGame = 0 end
@@ -140,7 +150,7 @@ function love.keypressed(key)
 	elseif key == "escape" and gameState == "help" then
 		love.graphics.clear()
 		gameState = "title"
-	elseif key == "p" then
+	elseif key == "p" and preGame <= 0 and gameState == "live" then
 		if gameState == "paused" then 
 			gameState = "live"
 		else

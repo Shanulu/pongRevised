@@ -17,12 +17,10 @@ My goals for this are:
 * Maximum balls = 5  
 * Maximum blocks = 3
 
-##To-Do List
-* Separate screen drawing into functions  
-* Combine screen functions and button functions into one file, 'Interface'   
-* Create button toggle function for options buttons  
+##To-Do List  
+* Fix button toggle function for options buttons  
 * Create art for remaining buttons  
-* Revise how balls obtain their velocity  
+* Revise how balls obtain their random velocity
 * Create win condition, win or loss state, and corresponding screens  
 * (optional)Devise a plan to handle gameStates cleanly
 
@@ -35,18 +33,20 @@ My goals for this are:
 
 ###7/23/2013
 * added help gamestate and page  
-* fixed horizontal velocity change based on distance from paddle center  
 * added pause functionality  
-* revised buttons to have a corresponding gameState  
-* revised ball max vertical velocity to 400  
 * added ai difficulty selector, easy, medium, hard  
-* moved mouse callbacks to button.lua  
+* added interface.lua, integrated button.lua and created Screen:draw()  
+* added temporary win condition, quit on score of 15
+* adjusted buttons to have a corresponding gameState  
+* adjusted ball max vertical velocity to 400  
+* fixed horizontal velocity change based on distance from paddle center  
+* fixed math error with paddle width modification
 
 ###7/21/2013 
 * added options and help button  
-* adjusted max blocks to 3  
 * added custom font  
 * added pregame countdown  
+* adjusted max blocks to 3  
 
 ###7/19/2013
 * added horizontal velocity increase depending on distance from paddle center  
@@ -59,7 +59,7 @@ My goals for this are:
 ###7/17/2013
 * added button.lua, blocks.lua  
 * added background music thanks to "thisismyusername" creator of '1-minute' @ opengameart.org  
-* revised collision detection
+* adjusted collision detection
 
 ###7/16/2013
 * added scoring and paddle width modification  

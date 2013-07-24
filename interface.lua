@@ -1,8 +1,43 @@
---[[button.lua    Created by: Michael Groll
-button for pong
+--[[ interface.lua    ----------------------------  Created by: Michael Groll   
+created to handle my drawing calls for title/options/help screens and
+to handle my button loading and drawing and mouse callbacks in regards to those
+---------------------------------------------------------------------------]]
 
-functions: load, new, draw
---------------------------------------------]]
+Screen = {}
+
+function Screen:draw()
+--[[ HELP SCREEN --------------------------------------]]
+	--draw our title screen
+	if gameState == "title" then
+		love.graphics.clear()
+		love.graphics.setFont(preGameFont)
+		--love.graphics.setColor(150, 0, 200)    --doesnt work because we used setColorMode("replace") to prevent our buttons from fucking up
+		love.graphics.print("Pong 2.0", width/2 - 50, 20)
+	elseif gameState == "help" then
+		--draw our help screen
+		love.graphics.clear()
+		--love.graphics.setColor( 100, 255, 50)
+		love.graphics.setFont(preGameFont)
+		love.graphics.printf("Use W and A or Left and Right to move." ..
+							"\n\nRandom blocks will spawn and die. The color gives away the time remaining" ..
+							"\n\nBalls will spawn from blocks, or if 0 remain, up to a maximum of 5" ..
+							"\n\nBalls increase in speed by hitting objects and walls" , 20,20, width-30)
+	elseif gameState == "options" then
+		--draw options screen
+		love.graphics.clear()
+		--love.graphics.setColor( 100, 255, 50)
+		love.graphics.setFont(preGameFont)
+		love.graphics.print("AI difficulty:", 20, 20)
+		love.graphics.print("BGM Volume: ", 20, 50)
+	elseif gameState == "paused" then
+		love.graphics.setFont(preGameFont)
+		love.graphics.print("Paused. Press P to resume.", 30, height/2)
+	end
+	--draw our buttons
+	Button:draw()
+end
+		
+--[[------ BUTTON -----------------------------------------------------------------------------------------------------------------------]]
 
 buttons = {}
 
@@ -58,17 +93,23 @@ function Button:load()
 	buttons[#buttons+1] = Button:new("easy", love.graphics.newImage("Art/easy_up.png"), love.graphics.newImage("Art/easy_dn.png"))
 	buttons[5].w = buttons[5].currentImage:getWidth()
 	buttons[5].h = buttons[5].currentImage:getHeight()
-	buttons[5].x = 150
-	buttons[5].y = 20
+	buttons[5].x = 250
+	buttons[5].y = 25
 	buttons[5].state = "options"
-	--AI Average
+	--AI Medium
 	buttons[#buttons+1] = Button:new("medium", love.graphics.newImage("Art/med_up.png"), love.graphics.newImage("Art/med_dn.png"))
 	buttons[6].w = buttons[6].currentImage:getWidth()
 	buttons[6].h = buttons[6].currentImage:getHeight()
 	buttons[6].x = buttons[5].x + buttons[5].w
-	buttons[6].y = 20
+	buttons[6].y = 25
 	buttons[6].state = "options"
-	--AI Impossible
+	--AI Hard
+	buttons[#buttons+1] = Button:new("hard", love.graphics.newImage("Art/hard_up.png"), love.graphics.newImage("Art/hard_dn.png"))
+	buttons[7].w = buttons[7].currentImage:getWidth()
+	buttons[7].h = buttons[7].currentImage:getHeight()
+	buttons[7].x = buttons[6].x + buttons[6].w
+	buttons[7].y = 25
+	buttons[7].state = "options"
 	--BGM OFF
 	--BGM ON
 	--SOUND OFF
@@ -124,7 +165,7 @@ function love.mousereleased(x, y, button)
 				end
 			end
 			
-			if v.name ~= "easy" and v.name ~= "medium" then
+			if v.name ~= "easy" and v.name ~= "medium" and v.name ~= "hard" then
 				v.currentImage = v.upImage --return the button to normal so when we return...
 			end	
 		end

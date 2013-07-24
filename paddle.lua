@@ -53,18 +53,17 @@ end
 function Paddle:score(n)
 	--go through our paddles tables
 	for i, v in ipairs(paddles) do
-		--find if it equals the paddle we want, 1/top or 2/bottom
+		--find if it equals the paddle we want, give it a score and make it smaller
 		if i == n then
-			v.w = v.w + 3
-			v.score = v.score + 1
-			if v.w >= width/6 then
-				v.w = width/6
-			end
-		--if its the other paddle make it smaller!
-		elseif i ~= n then
 			v.w = v.w - 3
+			v.score = v.score + 1
 			if v.w <= 18 then
 				v.w = 18
+			end
+		elseif i ~= n then --if its the other paddle make it bigger!
+			v.w = v.w + 3
+			if v.w >= width/6 then
+				v.w = width/6
 			end
 		end
 	end
@@ -75,7 +74,7 @@ function Paddle:findTarget(dt)
 	local minSteps = math.huge
 	
 	for i, b in ipairs(balls) do
-		--iterate through our ballList
+		--iterate through our balls
 		if b.v > 0 then
 			--set steps = to the deltaY/velocity to estimate time to bottom
 			local steps = (height - b.y)/b.v
