@@ -1,26 +1,23 @@
--- My third complete re-write of pong. 
-require 'ball' --contains our ball class
+----------------------------------------------------------------------------
+-- project:			Pong Revised
+-- file: 			main.lua
+-- author:			Michael Groll
+-- version:			0.8.0
+-- gitHub:			https://github.com/Shanulu/pongRevised
+--
+-- description:     Love2D's base file, contains most of the initializing,
+--					drawing, and updating of the Pong components. Also
+--					contains some of the keyboard inputs as well as my
+--					customSort function.
+----------------------------------------------------------------------------
+require 'ball' --contains our ball class and collision deteciton
 require 'paddle' --contains our paddle class
-require 'interface' --contains our gameStates, buttons
-require 'blocks'
---this function here will delete any entries that we have marked by putting the deleted tables at the end
---using the sort via order, in which deleted has math.huge assigned.
-function customSort(t) --takes a table, must have a .order variable
-	-- sort by the order, deleted will always be math.huge and be at the end!
-	table.sort(t, function(a,b) return a.order < b.order end)
-	local last = #t
-	while t[last] == deleted do
-		t[last] = nil
-		last = last - 1
-	end
-end
-
+require 'interface' --contains our screen and buttons
+require 'blocks' --contains our blocks
 
 function love.load()
 	love.graphics.setBackgroundColor(0, 0, 0) --Black
 	love.graphics.setColorMode("replace")
-	preGameFont = love.graphics.newFont("Fonts/Digital_tech.otf", 36)
-	scoreFont = love.graphics.newFont("Fonts/Digital_tech.otf", 14)
 	--[[-- VARIABLES --------]]
 	deleted = { order = math.huge } --a table used to for comparing later
 	height = love.graphics.getHeight()
@@ -74,32 +71,6 @@ function love.draw()
 	elseif gameState ~= "live" then
 		Screen:draw()
 	end
-	
-	--[[ OPTIONS SCREEN -----------------------------------
-	elseif gameState == "options" then
-		--draw options screen
-		love.graphics.clear()
-		love.graphics.setColor( 100, 255, 50)
-		love.graphics.setFont(preGameFont)
-		love.graphics.print("AI difficulty:", 20, 20)
-		love.graphics.print("BGM Volume: ", 20, 50)
-		
-	-- HELP SCREEN --------------------------------------
-	elseif gameState == "help" then
-		--draw our help screen
-		love.graphics.clear()
-		love.graphics.setColor( 100, 255, 50)
-		love.graphics.setFont(preGameFont)
-		love.graphics.printf("Use W and A or Left and Right to move." ..
-							"\n\nRandom blocks will spawn and die. The color gives away the time remaining" ..
-							"\n\nBalls will spawn from blocks, or if 0 remain, up to a maximum of 5" ..
-							"\n\nBalls increase in speed by hitting objects and walls" , 20,20, width-30)
-	end
-		--will only draw buttons for their corresponding gamestate
-	if gameState ~= "live" then
-		Button:draw()
-	end ]]
-	
 end
 
 function love.update(dt)
@@ -142,22 +113,38 @@ function love.update(dt)
 end
 
 function love.keypressed(key)
-	if key == "escape" and gameState == "options" then
-		love.graphics.clear()
-		gameState = "title"
-	elseif key == "escape" and gameState == "title" then
-		love.event.push('quit')
-	elseif key == "escape" and gameState == "help" then
-		love.graphics.clear()
-		gameState = "title"
-	elseif key == "p" and preGame <= 0 and gameState == "live" then
+	if key == "escape" then
+		if gameState == "options" then
+			gameState = "title"
+		elseif gameState == "title" then
+			love.event.push('quit')
+		elseif gameState == "help" then
+			gameState = "title"
+		elseif gameState == "pause" then
+			gameState = "live"
+		else  --every other gameState: live, win, loss - we want to go back to title screen
+			gameState = "title"
+		end			
+	end
+	--end escape key
+	if key == "p" and preGame <= 0 and gameState == "live" then
 		if gameState == "paused" then 
 			gameState = "live"
 		else
 			gameState = "paused"
 		end
 	end	
+	--end p key
 end
 
-function love.quit()
+--this function here will delete any entries that we have marked by putting the deleted tables at the end
+--using the sort via order, in which deleted has math.huge assigned.
+function customSort(t) --takes a table, must have a .order variable
+	-- sort by the order, deleted will always be math.huge and be at the end!
+	table.sort(t, function(a,b) return a.order < b.order end)
+	local last = #t
+	while t[last] == deleted do
+		t[last] = nil
+		last = last - 1
+	end
 end

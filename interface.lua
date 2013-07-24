@@ -1,9 +1,16 @@
---[[ interface.lua    ----------------------------  Created by: Michael Groll   
-created to handle my drawing calls for title/options/help screens and
-to handle my button loading and drawing and mouse callbacks in regards to those
----------------------------------------------------------------------------]]
-
+----------------------------------------------------------------------------
+-- project:			Pong Revised
+-- file: 			interface.lua
+-- author:			Michael Groll
+-- version:			0.8.0
+-- gitHub:			https://github.com/Shanulu/pongRevised
+--
+-- description:     Handles initializing of buttons and text, drawing and
+--					updating thereof. 
+----------------------------------------------------------------------------
 Screen = {}
+preGameFont = love.graphics.newFont("Fonts/Digital_tech.otf", 36)
+scoreFont = love.graphics.newFont("Fonts/Digital_tech.otf", 14)
 
 function Screen:draw()
 --[[ HELP SCREEN --------------------------------------]]

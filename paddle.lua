@@ -1,10 +1,12 @@
---[[paddle.lua   Created by: Michael Groll
-paddle class for pong
-
-functions: update, draw, new, findTarget, score, load
-
--------------------------------------------]]
-
+----------------------------------------------------------------------------
+-- project:			Pong Revised
+-- file: 			paddle.lua
+-- author:			Michael Groll
+-- version:			1.0
+-- gitHub:			https://github.com/Shanulu/pongRevised
+--
+-- description:     Handles updating, drawing, scoring, and AI for paddle(s)
+----------------------------------------------------------------------------
 paddles = {}
 Paddle = {}
 Paddle.__index = Paddle

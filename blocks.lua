@@ -1,9 +1,12 @@
---[[ blocks.lua    Created By: Michael Groll
-creates random blocks in my Pong game.
-
-functions: 
-
--------------------------------------------]]
+----------------------------------------------------------------------------
+-- project:			Pong Revised
+-- file: 			blocks.lua
+-- author:			Michael Groll
+-- version:			1.0.0
+-- gitHub:			https://github.com/Shanulu/pongRevised
+--
+-- description:     Handles deleting, drawing, and updating of blocks
+----------------------------------------------------------------------------
 
 blocks = {}
 
@@ -13,8 +16,8 @@ Block.__index = Block
 function Block:new() 
 	local block = setmetatable( {}, Block )
 	
-	block.x = math.random(90, width - 90)
-	block.y = math.random(25, width - 25)
+	block.x = math.random(25, width - 25)
+	block.y = math.random(50, height - 90)
 	block.w = math.random(10, 40)
 	block.h = math.random(10, 40)
 	block.color = {0, 255, 0}

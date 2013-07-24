@@ -35,10 +35,12 @@ My goals for this are:
 * added help gamestate and page  
 * added pause functionality  
 * added ai difficulty selector, easy, medium, hard  
-* added interface.lua, integrated button.lua and created Screen:draw()  
-* added temporary win condition, quit on score of 15
+* added interface.lua, integrated button.lua and created screen functions  
+* added temporary win condition, quit on score of 15  
 * adjusted buttons to have a corresponding gameState  
 * adjusted ball max vertical velocity to 400  
+* adjusted distance from paddle in which blocks can spawn  
+* adjusted keypressed callback regarding the use of escape
 * fixed horizontal velocity change based on distance from paddle center  
 * fixed math error with paddle width modification
 

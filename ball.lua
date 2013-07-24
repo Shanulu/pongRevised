@@ -1,9 +1,13 @@
---[[ball.lua    Created by: Michael Groll
-A ball class for Pong
-
-functions: new, draw, delete, update, collide
-
---]]
+----------------------------------------------------------------------------
+-- project:			Pong Revised
+-- file: 			ball.lua
+-- author:			Michael Groll
+-- version:			1.0.0
+-- gitHub:			https://github.com/Shanulu/pongRevised
+--
+-- description:     Handles deleting, drawing, updating, collision detection,
+--					and sound for all of the pong balls
+----------------------------------------------------------------------------
 --a table to store our balls
 balls = {}
 --set up our ball class
