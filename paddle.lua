@@ -2,7 +2,7 @@
 -- project:			Pong Revised
 -- file: 			paddle.lua
 -- author:			Michael Groll
--- version:			1.0
+-- version:			1.0.0
 -- gitHub:			https://github.com/Shanulu/pongRevised
 --
 -- description:     Handles updating, drawing, scoring, and AI for paddle(s)

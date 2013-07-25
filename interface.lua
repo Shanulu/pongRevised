@@ -2,7 +2,7 @@
 -- project:			Pong Revised
 -- file: 			interface.lua
 -- author:			Michael Groll
--- version:			0.8.0
+-- version:			0.9.0
 -- gitHub:			https://github.com/Shanulu/pongRevised
 --
 -- description:     Handles initializing of buttons and text, drawing and

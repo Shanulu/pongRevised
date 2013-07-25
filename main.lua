@@ -2,7 +2,7 @@
 -- project:			Pong Revised
 -- file: 			main.lua
 -- author:			Michael Groll
--- version:			0.8.0
+-- version:			0.9.0
 -- gitHub:			https://github.com/Shanulu/pongRevised
 --
 -- description:     Love2D's base file, contains most of the initializing,
