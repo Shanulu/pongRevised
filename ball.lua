@@ -20,8 +20,8 @@ function Ball:new(x, y, r, h, v)
 	ball.x = x or width/2
 	ball.y = y or height/2
 	ball.r = r or 10 --radius
-	ball.h = h or math.random(-200, 200) --horizontal velocity
-	ball.v = v or math.random(-200, 200) --vertical velocity
+	ball.h = h or Ball:assignVelocity() --horizontal velocity
+	ball.v = v or Ball:assignVelocity() --vertical velocity
 	ball.color = { 255*math.random(), 255*math.random(), 255*math.random() }
 	ball.steps = nil --used in AI calculations
 	ball.order = math.random() --needed in our sort function
@@ -190,5 +190,14 @@ function Ball:checkDistance(paddle)
 		self.h = -225
 	end
 end
-
+-- I needed a velocity that wasn't too slow or 0
+-- this will return -200 to -100 or 100 to 200. 
+function Ball:assignVelocity()
+	local v = 0
+	while v < 100 and v > -100 do
+		v = math.random(-200, 200)
+	end
+	
+	return v
+end
 	

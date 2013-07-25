@@ -20,16 +20,20 @@ My goals for this are:
 ##To-Do List  
 * Fix button toggle function for options buttons  
 * Create art for remaining buttons  
-* Revise how balls obtain their random velocity
 * Create win condition, win or loss state, and corresponding screens  
 * (optional)Devise a plan to handle gameStates cleanly
 
 ##Known Issues(always revised with each update)
-* sometimes the ball gets stuck in the sides of the window  
+* sometimes the ball gets stuck in the sides of the window probably because    
 * collision is still shitty  
-* returning to title screen from options or help causes a green hue
-* random velocities can be zero or approaching 0  
-* options buttons turn "off" when clicking outside their bounds
+
+###7/24/2013
+* added button:update to replace mouse callback  
+* added the remaining options buttons
+* adjusted win condition with proper win screens  
+* adjusted help screen to include winning
+* fixed setColorMode issue  
+* fixed options buttons  
 
 ###7/23/2013
 * added help gamestate and page  
@@ -37,6 +41,7 @@ My goals for this are:
 * added ai difficulty selector, easy, medium, hard  
 * added interface.lua, integrated button.lua and created screen functions  
 * added temporary win condition, quit on score of 15  
+* added assignVelocity to ball, fixes random velocity issue  
 * adjusted buttons to have a corresponding gameState  
 * adjusted ball max vertical velocity to 400  
 * adjusted distance from paddle in which blocks can spawn  
